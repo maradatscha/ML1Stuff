@@ -1,0 +1,68 @@
+%!TEX root = main.tex
+\documentclass
+[
+	a4paper,
+	11pt,				% 10pt, 11pt oder 12pt - Standard ist 10pt
+	pointlessnumbers,	% kein abschließenden Punkt hinter den Nummerierungen machen
+	%pdftex,
+	%chapterprefix,		% Kapitel anschreiben als Kapitel
+	%openright, 		
+	%openany,
+	oneside,
+	abstracton,
+	final,				%draft,
+	%normalheadings,	% Überschriften etwas kleiner (smallheadings)
+	%BCOR21mm,			% Bindekorrektur, bspw. 1 cm
+	%DIV13,			% führt die Satzspiegelberechnung neu aus
+	bibtotoc			% Literaturverzeichniss in toc eintragen
+	%bibgerm,			% wegen BibTex in Deutschen Stil, sollte an alle weitergegeben werden
+]
+{scrreprt}				% KOMA-Script 
+
+%\pagestyle{headings}			% sieht gut aus
+
+% Packages:
+%\usepackage[ngerman]{babel}
+\usepackage[USenglish]{babel}
+\usepackage[T1]{fontenc}		% für T1 Zeichensatz
+\usepackage{lmodern} 			% Type1-Schriftart für nicht-englische Texte
+
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+%\usepackage{dsfont}				% brauche ich bis jetzt nur für die Zahlenbereiche: N,R,Z 
+%\usepackage[babel,german=quotes]{csquotes}	% für einheitliche Anführungszeichen
+
+\usepackage{tikz}		% syntax layer for pgf, a tae macro package for generating graphics
+\usetikzlibrary{plotmarks}
+\usepackage{verbatim}
+
+%\usetikzlibrary{chains,decorations}
+\usepackage{pgf}
+\usepackage{xcolor}				% für Farbmischungen
+\usepackage{multicol}			% für mehrere Spalten
+\usepackage{url}	
+\usepackage{nameref}			% um Kapitelüberschriften referenzieren zu können
+
+%\renewcaptionname{ngerman}{\abstractname}{Kurzfassung}
+
+%\usepackage{caption}	% ich mache lieber alles über das Koma Script:
+	\setcapindent{0em}	% kein Einzug
+	\addtokomafont{caption}{\footnotesize} %\footnotesize \small 
+	\addtokomafont{captionlabel}{\sffamily\bfseries}
+
+%% Packages für Grafiken & Abbildungen %%%%%%%%%%%%%%%%%%%%%%
+\usepackage{graphicx} %%Zum Laden von Grafiken
+\usepackage{subfig} %%Teilabbildungen in einer Abbildung
+\usepackage{float}		% für den [H] exakt hier Specifier
+\usepackage{pdfpages}
+
+\usepackage{boxedminipage}
+
+% wichtig: hyperef muss als letztes Paket geladen werden, weiter Optionen: [pdfstartview={Fit}, pagebackref]
+%\xdefinecolor{urlFarbe}{rgb}{0.0,0.5,0.5}
+\usepackage[pdfauthor={Fabian Langguth, Sebastian Koch}, bookmarks=false, pdftex, colorlinks=true, urlcolor=urlFarbe, linkcolor=black, citecolor=black]{hyperref}
+
+
+\renewcommand{\thefigure}{\arabic{figure}}
+\renewcommand{\thetable}{\arabic{table}}
