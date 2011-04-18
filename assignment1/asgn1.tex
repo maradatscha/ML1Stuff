@@ -1,0 +1,16 @@
+%!TEX root = /Users/sebi/Documents/uni/Master/Semester2/ML1Stuff/assignment1/main.tex
+\section{Probability Theory}
+
+\begin{eqnarray} 
+    p(x|z)p(y|x,z) &=&  \frac{p(x,z)}{p(z)}\cdot \frac{p(x,y,z)}{p(x,z)} \hspace{1cm}\mbox{2 times product rule}\\
+    &=&  \frac{p(x,y,z)}{p(z)} \\
+    &=&  p(x,y|z) \hspace{1cm} \mbox{Bayes Rule}
+\end{eqnarray}
+
+\begin{eqnarray}
+    \frac{p(y| x,z)p(x|z)}{p(y|z)}&=& \frac{\frac{p(x,y,z)}{p(x,z)} \frac{p(x,z)}{p(z)}}{\frac{p(y,z)}{p(z)}} \hspace{1cm}\mbox{3 times Bayes Rule}\\
+    &=& \frac{p(x,y,z)}{p(y,z)} \\
+    &=& p(x|y,z) \hspace{1cm}\mbox{Bayes Rule}
+\end{eqnarray}
+
+
