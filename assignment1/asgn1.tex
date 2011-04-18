@@ -1,5 +1,5 @@
 %!TEX root = /Users/sebi/Documents/uni/Master/Semester2/ML1Stuff/assignment1/main.tex
-\section{Probability Theory}
+\section*{Probability Theory}
 
 \begin{eqnarray} 
     p(x|z)p(y|x,z) &=&  \frac{p(x,z)}{p(z)}\cdot \frac{p(x,y,z)}{p(x,z)} \hspace{1cm}\mbox{2 times product rule}\\
@@ -14,3 +14,21 @@
 \end{eqnarray}
 
 
+\begin{eqnarray}
+    \mathbb{E}[X]+\mathbb{E}[Y]&=& \sum_{X}(x_i p(x_i)) + \sum_{Y}(y_i p(y_i))\\
+    &=& \sum_{X, Y}(x_i p(x_i)p(y_i)) + \sum_{X,Y}(y_i p(x_i)p(y_i))\\
+    &=& \sum_{X, Y}(x_i p(x_i,y_i)) + \sum_{X,Y}(y_i p(x_i,y_i)) \hspace{4mm}\mbox{because of independence}\\
+    &=& \sum_{X, Y}((x_i+y_i) p(x_i,y_i))\hspace{1cm}\\
+    &=& \mathbb{E}[X+Y]
+\end{eqnarray}
+
+\begin{eqnarray}
+    \text{var}[X+Y]&=& \mathbb{E}[(X+Y)^2] - [\mathbb{E}[X+Y]]^2\\
+    &=& \mathbb{E}[X^2+2XY+Y^2] - [\mathbb{E}[X]+\mathbb{E}[Y]]^2 \hspace{5mm}\mbox{using (3)}\\
+    &=& \mathbb{E}[X^2]+\mathbb{E}[2XY]+\mathbb{E}[Y^2] - [\mathbb{E}[X]+\mathbb{E}[Y]]^2 \hspace{5mm}\mbox{using (3)}\\
+    &=& \mathbb{E}[X^2]+\mathbb{E}[2XY]+\mathbb{E}[Y^2] - \mathbb{E}[X]^2-2[\mathbb{E}[X]\mathbb{E}[Y]] -\mathbb{E}[Y]^2 \\
+    &=& \mathbb{E}[X^2]- \mathbb{E}[X]^2 +\mathbb{E}[Y^2]-\mathbb{E}[Y]^2 -2[\mathbb{E}[X]\mathbb{E}[Y]] +\mathbb{E}[2XY]  \\
+    &=& \text{var}[X] +\text{var}[Y] -2[\mathbb{E}[X]\mathbb{E}[Y]] +\mathbb{E}[XY]]  \\
+    &=& \text{var}[X] +\text{var}[Y] -2[\text{covar}[X,Y]]  \\
+    &=& \text{var}[X] +\text{var}[Y]\hspace{5mm}\mbox{since X,Y are uncorrelated} 
+\end{eqnarray}
