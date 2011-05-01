@@ -1,0 +1,21 @@
+%!TEX root = ./main.tex
+\section*{Constrained Optimization}
+
+need to solve: 
+\begin{eqnarray}
+    \min_{\substack{x_1,x_2}}&& x_1 + 2x_2^2\\
+    sb.t. && 2x_1 + x_2 = 1
+\end{eqnarray}
+
+Lagrangian: $L(x_1,x_2,\lambda) = x_1 + 2x_2^2 + \lambda(2x_1 + x_2 - 1)$
+
+Conditions:  
+\begin{eqnarray}
+    \nabla_{\bf{x}} L(x_1,x_2,\lambda) &=& 0 \\
+    2x_1 + x_2 - 1 &=& 0 \\
+\end{eqnarray}
+
+Solving gives us: ${\bf x} = (9/16, -1/8), \lambda = 1/2 $
+
+
+besser nochmal nachrechnen!
