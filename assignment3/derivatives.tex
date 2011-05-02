@@ -13,10 +13,15 @@
 Ich glaub das hier ist noch mist:
 
 \begin{eqnarray}
-    \frac{\partial}{\partial x}x^TAx&=& \frac{\partial}{\partial x} x^T \left( \sum_{i=1}^n A_{i,1} x_i,\dots,\sum_{i=1}^n A_{i,n} x_i \right) \\
-    &=& \frac{\partial}{\partial x} \left( \begin{matrix} 
-    \sum_{i=1}^n A_{i,1} x_i x_1 & \dots &\sum_{i=1}^n A_{i,n} x_i x_1 \\
-    \vdots&&\vdots \\
-    \sum_{i=1}^n A_{i,1} x_i x_n & \dots &\sum_{i=1}^n A_{i,n} x_i x_n \\
-    \end{matrix}\right)
+    \frac{\partial}{\partial x}x^TAx&=& \frac{\partial}{\partial x} x^T \left( 
+    \begin{matrix}
+      \sum_{i=1}^n A_{1,i} x_i\\ 
+      \vdots \\
+      \sum_{i=1}^n A_{n,i} x_i 
+    \end{matrix}\right) \\
+    &=& \frac{\partial}{\partial x} \sum_{j=1}^n\left[ \left( \sum_{i=1}^nA_{j,i}x_i \right) x_j \right]\\
+    &=& \left( \frac{\partial}{\partial x_1} \sum_{j=1}^n\left[ \left( \sum_{i=1}^nA_{j,i}x_i \right) x_j \right], \dots , 
+    \frac{\partial}{\partial x_n} \sum_{j=1}^n\left[ \left( \sum_{i=1}^nA_{j,i}x_i \right) x_j \right] \right) \\
+    &=&  \left( \left( \sum_{i=1}^n A_{1,i} x_i \right) + \left( \sum_{i=1}^n A_{i,1}x_i \right), \dots , \left( \sum_{i=1}^n A_{n,i} x_i \right) + \left( \sum_{i=1}^n A_{i,n}x_i \right) \right) \\
+&=& \left ( A^T + A \right) x
 \end{eqnarray}
