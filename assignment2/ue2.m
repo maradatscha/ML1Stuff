@@ -89,10 +89,20 @@ post = [normpdf(test_avg(:), mean_train(1,1,2), sqrt(var(2)))*0.5, ...
 % error rate for 2 and 5
 1.0-(sum(I(1:550)==1)+sum(I(551:end)==2))/size(I,1)
 
+
+% x = linspace(0,255, 255);
+% 
+% colors = ['r.', 'g.', 'b.', 'c.','y.','m.','k.'];
+% 
+% 
+% for i=1:7
+%     colors((i-1)*2+1:i*2)
+%     plot(normpdf(x, mean_train(1,1,i), sqrt(var(i))),  colors((i-1)*2+1:i*2));
+%     hold on;
+% end
+
+
 x = rand*255;
-
-mean_train(:,:,:);
-
 
 
 post = [normpdf(x, mean_train(1,1,1), sqrt(var(1)))*0.1, ... 
@@ -102,9 +112,9 @@ post = [normpdf(x, mean_train(1,1,1), sqrt(var(1)))*0.1, ...
         normpdf(x, mean_train(1,1,5), sqrt(var(5)))*0.1, ... 
         normpdf(x, mean_train(1,1,6), sqrt(var(6)))*0.1, ... 
         normpdf(x, mean_train(1,1,7), sqrt(var(7)))*0.1, ...
-        normpdf(x, mean_train(1,1,7), sqrt(var(8)))*0.1, ...
-        normpdf(x, mean_train(1,1,7), sqrt(var(9)))*0.1, ...
-        normpdf(x, mean_train(1,1,8), sqrt(var(10)))*0.1];
+        normpdf(x, mean_train(1,1,8), sqrt(var(8)))*0.1, ...
+        normpdf(x, mean_train(1,1,9), sqrt(var(9)))*0.1, ...
+        normpdf(x, mean_train(1,1,10), sqrt(var(10)))*0.1];
 
     
 
@@ -156,10 +166,105 @@ for i=1:10
               sum(I(550*(i-1)+1:550*i)==9), sum(I(550*(i-1)+1:550*i)==10)];
 end
 
-M
+M;
+
+
+train_response = mean(diff(data(:,1:550,:)));
+
+mean_train = mean(train_response(:,:,:),2);
+mean_train_mat = repmat(mean_train, 1, 550);
+
+var = sum( (train_response(:,:,:)-mean_train_mat).^2 )./ size(train_data,2);
+
+% x = linspace(0,100, 3000);
+ 
+% plot(normpdf(x, mean_train(1,1,1), sqrt(var(1))),  'r.');
+% hold on;
+% plot(normpdf(x, mean_train(1,1,8), sqrt(var(8))),  'g.');
+
+test_small = [data(:,551:end,1),data(:,551:end,8)];
+test_avg = mean(diff(test_small));
+
+post = [normpdf(test_avg(:), mean_train(1,1,1), sqrt(var(1)))*0.5, ... 
+        normpdf(test_avg(:), mean_train(1,1,8), sqrt(var(8)))*0.5];
+
+[Y,I]= max(post, [], 2);
+
+% error rate for 1 and 8 with new feature
+'error rate for new feature to distinguish between  1 and 8'
+1.0-(sum(I(1:550)==1)+sum(I(551:end)==2))/size(I,1)
+
+
+test_small = [data(:,551:end,2),data(:,551:end,5)];
+test_avg = mean(diff(test_small));
+
+
+post = [normpdf(test_avg(:), mean_train(1,1,2), sqrt(var(2)))*0.5, ... 
+        normpdf(test_avg(:), mean_train(1,1,5), sqrt(var(5)))*0.5];
+
+[Y,I]= max(post, [], 2);
+
+% error rate for 2 and 5 with new feature
+'error rate for new feature to distinguish between 2 and 5'
+1.0-(sum(I(1:550)==1)+sum(I(551:end)==2))/size(I,1)
 
 
 
+feature_new = mean(diff(data(:,1:550,:)));
+feature_old = mean(data(:,1:550,:));
 
 
-    
+feature = [feature_new; feature_old];
+
+mean_feature = mean(feature(:,:,:),2);
+
+covariances = zeros(2,2,10);
+
+for i=1:10
+    covariances(:,:,i) = cov(feature(:,:,i)');
+end
+
+
+test_small = [data(:,551:end,1),data(:,551:end,8)];
+test_feature = [mean(diff(test_small)); mean(test_small)];
+
+post = [mvnpdf(test_feature', mean_feature(:,1,1)', covariances(:,:,1)).*0.5, ... 
+        mvnpdf(test_feature', mean_feature(:,1,8)', covariances(:,:,8)).*0.5];
+
+[Y,I]= max(post, [], 2);
+
+% error rate for 1 and 8 with new feature
+'error rate for new feature to distinguish between  1 and 8'
+1.0-(sum(I(1:550)==1)+sum(I(551:end)==2))/size(I,1)
+
+%x = rand(10000,2).*repmat([40, 200],10000,1) ;
+
+%one = mvnpdf(x, mean_feature(:,1,1)', covariances(:,:,1)).*0.5;
+%eight = mvnpdf(x, mean_feature(:,1,8)', covariances(:,:,8)).*0.5;
+
+%plot3(x(:,1), x(:,2),one(:), 'r.');
+%hold on;
+%plot3(x(:,1), x(:,2),eight(:), 'b.');
+
+
+test_small = [data(:,551:end,2),data(:,551:end,5)];
+test_feature = [mean(diff(test_small)); mean(test_small)];
+
+post = [mvnpdf(test_feature', mean_feature(:,1,2)', covariances(:,:,2)).*0.5, ... 
+        mvnpdf(test_feature', mean_feature(:,1,5)', covariances(:,:,5)).*0.5];
+
+[Y,I]= max(post, [], 2);
+
+% error rate for 1 and 8 with new feature
+'error rate for new feature to distinguish between  2 and 5'
+1.0-(sum(I(1:550)==1)+sum(I(551:end)==2))/size(I,1)
+  
+
+%x = rand(10000,2).*repmat([40, 200],10000,1) ;
+
+%two = mvnpdf(x, mean_feature(:,1,2)', covariances(:,:,2)).*0.5;
+%five = mvnpdf(x, mean_feature(:,1,5)', covariances(:,:,5)).*0.5;
+
+%plot3(x(:,1), x(:,2),two(:), 'r.');
+%hold on;
+%plot3(x(:,1), x(:,2),five(:), 'b.');
