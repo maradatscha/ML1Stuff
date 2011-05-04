@@ -1,0 +1,38 @@
+%!TEX root = ./main.tex
+\section*{ML Solution for Gaussian Distribution}
+
+\begin{eqnarray}
+    \frac{\partial}{\partial \mu} \sum_{i=1}^N \ln p(x_i|\mu, \sigma)&=& 
+    \frac{\partial}{\partial \mu} \sum_{i=1}^N \ln \frac{1}{\sqrt{2 \pi} \sigma}\exp\left(-\frac{(x_i-\mu)^2}{2 \sigma^2} \right) \\
+    &=& \sum_{i=1}^N  \left(\frac{2 x_i - 2 \mu }{\sqrt{2 \pi} \sigma} \exp\left(-\frac{(x_i-\mu)^2}{2 \sigma^2} \right) \cdot  \frac{\sqrt{2 \pi} \sigma}{\exp\left(-\frac{(x_i-\mu)^2}{2 \sigma^2} \right)} \right) \\
+    &=& \sum_{i=1}^N  \left(2 x_i - 2 \mu \right) \\
+\end{eqnarray}
+
+Set this $=0$ to find the extremum:
+
+\begin{eqnarray}
+\sum_{i=1}^N  \left(2 x_i - 2 \mu \right)  &=& 0 \\
+\sum_{i=1}^N  \left( x_i -\mu \right)  &=& 0\\
+\sum_{i=1}^N  x_i  &=& \sum_{i=1}^N  \mu \\
+\sum_{i=1}^N  x_i  &=& N \cdot \mu \\
+ \frac{1}{N} \sum_{i=1}^N  x_i  &=& \mu 
+\end{eqnarray}
+
+
+
+\begin{eqnarray}
+    \frac{\partial}{\partial \sigma} \sum_{i=1}^N \ln p(x_i|\mu, \sigma)&=& 
+    \frac{\partial}{\partial \sigma} \sum_{i=1}^N \ln \frac{1}{\sqrt{2 \pi} \sigma}\exp\left(-\frac{(x_i-\mu)^2}{2 \sigma^2} \right) \\
+    &=& \frac{\partial}{\partial \sigma} \sum_{i=1}^N \ln(1) - \ln( \sqrt{2 \pi} \sigma) -\frac{(x_i-\mu)^2}{2 \sigma^2} \\
+    &=& \sum_{i=1}^N - \frac{1}{\sigma} + \frac{(x_i-\mu)^2}{\sigma^3} \\    
+\end{eqnarray}
+
+Again set this $=0$ to find the extremum:
+\begin{eqnarray}
+    0 &=& \sum_{i=1}^N \left( \frac{1}{\sigma} + \frac{(x_i-\mu)^2}{\sigma^3}\right)\\
+    0 &=& \sum_{i=1}^N \left( 1 + \frac{(x_i-\mu)^2}{\sigma^2}\right)\\
+    \sum_{i=1}^N 1 &=& \sum_{i=1}^N \left( \frac{(x_i-\mu)^2}{\sigma^2}\right)\\
+    N &=& \sum_{i=1}^N \left( \frac{(x_i-\mu)^2}{\sigma^2}\right)\\
+    \sigma^2 &=& \frac{1}{N}\sum_{i=1}^N \left( (x_i-\mu)^2\right)
+\end{eqnarray}
+
