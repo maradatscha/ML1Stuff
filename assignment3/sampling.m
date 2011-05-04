@@ -27,7 +27,7 @@ ie = pis(1)*num_samples;
 for i = 1:num_components
 	c = num_samples*pis(i);
 	R = chol(variances(:,:,i));
-	z = repmat(means(:,i)',c,1) + randn(c,2)*R
+	z = repmat(means(:,i)',c,1) + randn(c,2)*R;
 	samples(is:ie,:) = z;
 	if i < num_components
 		is = is + pis(i)*num_samples;
@@ -35,4 +35,4 @@ for i = 1:num_components
 	end
 end
 
-samples
+plot(samples(:,1), samples(:,2), '.')

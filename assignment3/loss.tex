@@ -1,0 +1,12 @@
+%!TEX root = main.tex
+\section*{Loss Functions} % (fold)
+\label{sec:loss_functions}
+We can optimize the Hamming loss by simply predicting each individual component $y_i$ independently since the loss is a linear combination of losses on each individual component $i$. For a specific $i$ this again corresponds to minimizing the 0/1 loss.
+
+\begin{align}
+	y^* &= \underset{y \in \mathcal{Y}}{\operatorname{argmin}} \sum_k \frac{1}{n} \sum_i I(y_i \neq C_i^k) p(C^k|x) \\
+	y_i^* &= \underset{y_i}{\operatorname{argmin}} \sum_k I(y_i \neq C_i^k) p(C_i^k|x) \\
+	&= \underset{C_i^k}{\operatorname{argmax}} ~ p(C_i^k|x)
+\end{align}
+
+% section loss_functions (end)
