@@ -9,4 +9,14 @@ We can optimize the Hamming loss by simply predicting each individual component 
 	&= \underset{C_i^k}{\operatorname{argmax}} ~ p(C_i^k|x)
 \end{align}
 
+The normal 0/1 loss optimizes the joint probability of the complete state, whereas the Hamming loss optimizes the probability of each variable individually. For two pixels we could have the following probabilities:
+
+\begin{tabular}{c|c|c|c}
+	x/y & 0   & 1    \\ \hline
+	0	& 0.4 & 0.15  \\ \hline
+	1	& 0   & 0.3    \\ 
+\end{tabular}\\
+
+In this case the 0/1 loss would predict $x=0$ and $y=0$ and the Hamming loss $x = 0$ and $y=1$.
+
 % section loss_functions (end)
