@@ -1,0 +1,10 @@
+%!TEX root = main.tex
+\section*{Feature Transformation - 1} 
+\begin{eqnarray}
+    k(x,x')&=&\left(<x,x'> + c \right)^3 \\
+    &=&\left(x_1x_1'+x_2x_2'+ c \right)^3 \\
+    &=&(x_1x_1')^3 + 3(x_1x_1')(x_2x_2')^2 + 3(x_1x_1')c^2 + 3(x_1x_1')^2(x_2x_2')  \\ \nonumber
+    && + 3(x_1x_1')^2c  + 6(x_1x_1')(x_2x_2')c + (x_2x_2')^3 + 3 (x_2x_2')c^2 + 3 c (x_2x_2')^2 + c^3\\
+    &=& (x_1x_1')((x_1x_1')((x_1x_1') + 3((x_2x_2') + c)) + (3x_2x_2')((x_2x_2') + 2c) + 3c^2)  \\ \nonumber
+    && (x_2x_2')((x_2x_2')((x_2x_2') + 3 c)+ 3c^2) + c^3
+\end{eqnarray}

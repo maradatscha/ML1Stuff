@@ -1,0 +1,28 @@
+%!TEX root = main.tex
+\section*{X-OR Problem} 
+If a linear function $f(x) = \text{sign}(w_1x_1 + w_2x_2+b)$ exists that is able to achieve zero training error on the given dataset, the following conditions have to be fulfilled:
+
+\begin{eqnarray}
+    \text{sign}(w_1(-a) + w_2(-a)+b)&=& +\\
+    \text{sign}(w_1(-a) + w_2a+b)&=&-\\
+    \text{sign}(w_1a + w_2(-a)+b)&=&-\\
+    \text{sign}(w_1a + w_2a+b)&=&+
+\end{eqnarray}
+
+Rewriting the equations (1) - (4), subtracting $b$ and deviding by $a$ gives us:
+
+\begin{eqnarray}
+    -w_1- w_2 &>& 0\\
+    -w_1 + w_2 &<& 0\\
+    w_1- w_2&<& 0\\
+    w_1 + w_2&>& 0
+\end{eqnarray}
+
+\begin{eqnarray}
+    -w_1 &>& w_2\\ \label{eq1}
+    -w_1 &<& - w_2\\\label{eq2}
+    w_1&<& w_2\\
+    w_1 &>& - w_2
+\end{eqnarray}
+
+Now we can easily see that equations (\ref{eq1}) and (\ref{eq2}) contradict each other.
