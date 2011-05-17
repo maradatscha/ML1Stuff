@@ -1,2 +1,9 @@
 %!TEX root = main.tex
 \section*{Feature Transformation - 2} 
+If we set $X = \mathds{R}^n$ we can find a transformation $\phi(x) : \mathds{R} \to \mathds{R}^n$ that projects each data point in its own dimension:
+
+\begin{equation}
+    \phi(x_i) = p \in \mathds{R}^n \text{ with } p_n = 0 (\forall n \neq i) \text{ and } p_i = 1 
+\end{equation}
+
+We can now find a linear function in $\mathds{R}$ that seperates the two classes with no classification errors.
