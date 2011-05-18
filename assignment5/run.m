@@ -1,26 +1,26 @@
 clear all;
 close all;
-mu_1 = [-3.0 -0.4 0]';
-mu_2 = [1.9 -0.3 0]';
-mu_3 = [0.9 1 0]';
+mu_1 = [2 2 0]';
+mu_2 = [-1 -1 0]';
 
 Ntr = 50;
 Nte = 100;
 
 x1 = randn(3,Ntr)+repmat(mu_1,1,Ntr);
 x2 = randn(3,Ntr)+repmat(mu_2,1,Ntr);
-x3 = randn(3,Ntr)+repmat(mu_3,1,Ntr);
 
 
 
-%plot3(x1(1,:), x1(2,:), x1(3,:), 'r.');
-%hold on;
-%plot3(x2(1,:), x2(2,:), x2(3,:), 'g.');
-%plot3(x3(1,:), x3(2,:), x3(3,:), 'b.');
+
+plot3(x1(1,:), x1(2,:), x1(3,:), 'r.');
+hold on;
+plot3(x2(1,:), x2(2,:), x2(3,:), 'g.');
+pause
+
 
 x1te = randn(3,Nte)+repmat(mu_1,1,Nte);
 x2te = randn(3,Nte)+repmat(mu_2,1,Nte);
-x3te = randn(3,Nte)+repmat(mu_3,1,Nte);
+
 
 
 % two class case, normalize
@@ -54,19 +54,22 @@ lte(2,Nte+1:end) = 1;
 n = 1;
 oldNorm = [1000 ; 1000];
 i = 1
-while(n > 0.00000001)
+
+
+
+while(n > 0.0000001 && i < 10000 )
     i = i +1
     gW1 = zeros(size(W1));
     gW2 = zeros(size(W2));
     
     for dp = 1:size(x,2)
     
-        [t, z] = predict(W1, W2, x(:,dp) , @id_x, @id_x);
+        [t, z] = predict(W1, W2, x(:,dp) , @sig, @sig);
 
         d = output_error(t, l(:,dp));
 
-        gW2 = gW2 + grad_W2( d, z, @(x)(1));
-        gW1 = gW1 + grad_W1(d, W1, W2, z, x , @(x)(ones(size(x,1),1)));
+        gW2 = gW2 + grad_W2( d, z, @sig_grad);
+        gW1 = gW1 + grad_W1(d, W1, W2, z, x , @sig_grad);
     end
     gW2 = gW2 / size(x,2);
     gW1 = gW1 / size(x,2);
@@ -87,7 +90,7 @@ end
 'predictions on training data: '
 c = 0;
 for i = 1:size(x,2)
-    [y, d] = max(predict(W1, W2, x(:,i) , @id_x, @id_x));
+    [y, d] = max(predict(W1, W2, x(:,i) , @sig, @sig));
     if(l(d,i))
         c = c + 1;
     end
@@ -101,7 +104,7 @@ end
 'predictions on test data: '
 c = 0;
 for i = 1:size(xte,2)
-    [y, d] = max(predict(W1, W2, xte(:,i) , @id_x, @id_x));
+    [y, d] = max(predict(W1, W2, xte(:,i) , @sig, @sig));
     if(lte(d,i))
         c = c + 1;
     end
