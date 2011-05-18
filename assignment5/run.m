@@ -4,7 +4,7 @@ mu_1 = [-3.0 -0.4 0]';
 mu_2 = [1.9 -0.3 0]';
 mu_3 = [0.9 1 0]';
 
-Ntr = 4;
+Ntr = 50;
 Nte = 100;
 
 x1 = randn(3,Ntr)+repmat(mu_1,1,Ntr);
@@ -36,24 +36,78 @@ x2te  = x2te - repmat(m,1,Nte);
 
 u = 3;                          % number of hidden variables
 x = [x1, x2]     ;               % training data
-x = [x ; ones(1, length(x))];
-l = zeros(2, Ntr+Ntr);    % labels
+x = [x ; ones(1, length(x))]; 
+xte = [x1te, x2te]     ;               % training data
+xte = [xte ; ones(1, length(xte))]; 
 r = 0.1; % learning rate
 
+l = zeros(2, Ntr+Ntr);    % labels
 l(1,1:Ntr) = 1;
 l(2,Ntr+1:end) = 1;
 
+lte = zeros(2, Nte+Nte);    % labels
+lte(1,1:Nte) = 1;
+lte(2,Nte+1:end) = 1;
+
 [W1 W2] = mlp( x, l, u );
 
-p = zeros(size(l));
+n = 1;
+oldNorm = [1000 ; 1000];
+i = 1
+while(n > 0.00000001)
+    i = i +1
+    gW1 = zeros(size(W1));
+    gW2 = zeros(size(W2));
+    
+    for dp = 1:size(x,2)
+    
+        [t, z] = predict(W1, W2, x(:,dp) , @id_x, @id_x);
 
-[t, z] = predict(W1, W2, x(:,1) , @id_x, @id_x);
+        d = output_error(t, l(:,dp));
 
-d = output_error(t, l(:,1))
+        gW2 = gW2 + grad_W2( d, z, @(x)(1));
+        gW1 = gW1 + grad_W1(d, W1, W2, z, x , @(x)(ones(size(x,1),1)));
+    end
+    gW2 = gW2 / size(x,2);
+    gW1 = gW1 / size(x,2);
+    
+    W2 = W2 - r * gW2;
+    W1 = W1 - r * gW1;
 
-W2 = W2 - r * grad_W2( d, z, @(x)(1));
-W1 = W1 - r* grad_W1(d, W1, W2, z, x , @(x)(ones(size(x,1),1)));
+    W1 = W1/sqrt(sum(sum(W1.*W1)));
+    W2 = W2/sqrt(sum(sum(W2.*W2)));
 
-W1 = W1/norm(W1);
-W2 = W2/norm(W2);
+    oldNorm = oldNorm - [norm(gW1) ; norm(gW2)];
+    n = max(oldNorm);
+    oldNorm = [norm(gW1) ; norm(gW2)];
+    
+end
+
+
+'predictions on training data: '
+c = 0;
+for i = 1:size(x,2)
+    [y, d] = max(predict(W1, W2, x(:,i) , @id_x, @id_x));
+    if(l(d,i))
+        c = c + 1;
+    end
+end
+
+'training error:' 
+(Ntr*2 - c)/(Ntr*2)
+
+
+
+'predictions on test data: '
+c = 0;
+for i = 1:size(xte,2)
+    [y, d] = max(predict(W1, W2, xte(:,i) , @id_x, @id_x));
+    if(lte(d,i))
+        c = c + 1;
+    end
+end
+
+'test error:' 
+(Nte*2 - c)/(Nte*2)
+
 
