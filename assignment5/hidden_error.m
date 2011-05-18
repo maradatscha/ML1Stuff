@@ -1,6 +1,6 @@
-function do = hidden_error( d, W2  )
+function do = hidden_error( d, W  )
 
-assert(length(d) == size(W2, 1))
+assert(length(d) == size(W, 1))
 
 do = W*d;
 %TODO check if correct multiplication

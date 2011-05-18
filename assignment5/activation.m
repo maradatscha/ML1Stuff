@@ -1,11 +1,8 @@
-function  y = activation( x, w, g)
+function  y = activation( x, W, g)
 
 assert(length(x) == length(w));
 
-m = x.*w;
-y = sum(m);
-
-y = g(y);
+y = g(W*x);
 
 end
 

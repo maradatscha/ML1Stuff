@@ -1,6 +1,6 @@
-function g = grad_W2( d,z )
+function g = grad_W2( d ,z, gt)
 
-g = d.*z;
+g = gt(d).*d.*z;
 
 end
 

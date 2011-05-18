@@ -1,10 +1,10 @@
 clear all;
 close all;
-mu_1 = [-3.0 -0.4 0]'
-mu_2 = [1.9 -0.3 0]'
-mu_3 = [0.9 1 0]'
+mu_1 = [-3.0 -0.4 0]';
+mu_2 = [1.9 -0.3 0]';
+mu_3 = [0.9 1 0]';
 
-Ntr = 50;
+Ntr = 4;
 Nte = 100;
 
 x1 = randn(3,Ntr)+repmat(mu_1,1,Ntr);
@@ -23,8 +23,7 @@ x2te = randn(3,Nte)+repmat(mu_2,1,Nte);
 x3te = randn(3,Nte)+repmat(mu_3,1,Nte);
 
 
-
-
+% two class case, normalize
 m = mean([x1,x2],2);
 
 x1  = x1 - repmat(m,1,Ntr);
@@ -32,6 +31,16 @@ x2  = x2 - repmat(m,1,Ntr);
 
 x1te  = x1te - repmat(m,1,Nte);
 x2te  = x2te - repmat(m,1,Nte);
+
+
+
+u = 3;                          % number of hidden variables
+x = [x1, x2]                    % training data
+l = [zeros(1, Ntr) , ones(1, Ntr)]    % labels
+
+[W1 W2] = mlp( x, l, u )
+
+predict(W1, W2, x , id, id)
 
 
 

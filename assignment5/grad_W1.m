@@ -1,10 +1,9 @@
-function g = grad_W1( x,zt, dh )
+function g = grad_W1( x,z, dh , gt)
 
-assert(length(x) == length(zt));
+assert(length(x) == length(z));
 assert(length(x) == length(dh));
 
-g = x.*zt.*dh;
-
+g = x.*gt(z).*dh;
 
 end
 
