@@ -35,13 +35,25 @@ x2te  = x2te - repmat(m,1,Nte);
 
 
 u = 3;                          % number of hidden variables
-x = [x1, x2]                    % training data
-l = [zeros(1, Ntr) , ones(1, Ntr)]    % labels
+x = [x1, x2]     ;               % training data
+x = [x ; ones(1, length(x))];
+l = zeros(2, Ntr+Ntr);    % labels
+r = 0.1; % learning rate
 
-[W1 W2] = mlp( x, l, u )
+l(1,1:Ntr) = 1;
+l(2,Ntr+1:end) = 1;
 
-predict(W1, W2, x , id, id)
+[W1 W2] = mlp( x, l, u );
 
+p = zeros(size(l));
 
+[t, z] = predict(W1, W2, x(:,1) , @id_x, @id_x);
 
+d = output_error(t, l(:,1))
+
+W2 = W2 - r * grad_W2( d, z, @(x)(1));
+W1 = W1 - r* grad_W1(d, W1, W2, z, x , @(x)(ones(size(x,1),1)));
+
+W1 = W1/norm(W1);
+W2 = W2/norm(W2);
 

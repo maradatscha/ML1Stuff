@@ -1,9 +1,15 @@
-function g = grad_W1( x,z, dh , gt)
+function WG = grad_W1( d, W1, W2,h, x , gt)
 
-assert(length(x) == length(z));
-assert(length(x) == length(dh));
+WG = zeros(size(W2,2)-1, size(x,1));
 
-g = x.*gt(z).*dh;
+zt = gt(W1*x);
+dh = d'*W2;
+
+for i=1:size(WG,1)
+    for j=1:size(WG,2)
+        WG(i,j)= x(j)*zt(i)*dh(i);
+    end
+end
 
 end
 
