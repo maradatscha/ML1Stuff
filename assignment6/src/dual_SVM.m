@@ -1,15 +1,23 @@
-function [ output_args ] = dual_SVM( x, y, G )
+function [ w,f ] = dual_SVM( x, y, G )
 
 
-H = eye(size(x, 2));
 
-b = zeros(size(x,2),1);
 
-A = -1.*eye(size(x,2))
+% something still wrong in here!
 
-Aeq = y;
-beq = zeros(1, size(y,2));
+f = ones(size(x,1), 1)
 
+i = repmat(y,1, size(y,1));
+j = repmat(y', size(y,1), 1);
+H = i.*G.*j
+
+b = zeros(size(x,1),1);
+A = -1.*eye( size(x,1))
+
+Aeq = y';
+beq = 0;
+
+[w,fval,f]  = quadprog(H,f,A,b, Aeq, beq);
 
 
 end
