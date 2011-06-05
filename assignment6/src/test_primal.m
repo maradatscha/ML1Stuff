@@ -12,3 +12,8 @@ f
 
 % flag is -2, means not solvable
 % which is OK because XOR can't be solved with linear
+
+
+
+
+
