@@ -1,0 +1,39 @@
+\input{../header}
+
+\begin{document}
+
+\begin{center}
+    \huge {\bf Assignment 5}
+    
+    \small Fabian Langguth, Sebastian Koch
+    
+    Sommersemester 2011
+    
+    \today
+\end{center}
+
+\section*{Cauchy Schwartz Inequality} % (fold)
+\label{sec:cauchy_schwartz_inequality}
+
+We want to show that $k(x_1,x_2)^2 \leq k(x_1,x_1)k(x_2,x_2)$. As $k$ is a kernel there exists a $\phi(x)$ s.t. $k(x,x') = \phi(x)^{\top}\phi(x')$. So we can write
+\begin{align}
+	(\phi(x_1)^{\top}\phi(x_2))^2 &\leq \phi(x_1)^2\phi(x_2)^2 \\
+	\bigg(\sum_i \phi(x_1)_i \phi(x_2)_i\bigg)^2 &\leq \sum_i \phi(x_1)^2 \sum_i \phi(x_2)^2
+\end{align}
+We can now show
+\begin{align}
+ &	\sum_i \phi(x_1)^2 \sum_i \phi(x_2)^2 - \bigg(\sum_i \phi(x_1)_i \phi(x_2)_i\bigg)^2\\ &= \sum_{i,j} \phi(x_1)_i^2 \phi(x_2)_j^2 -  \bigg(\sum_i \phi(x_1)_i \phi(x_2)_i\bigg)^2 \\
+	&= \sum_{i,j} \phi(x_1)_i^2 \phi(x_2)_j^2 -  \sum_{i,j} \phi(x_1)_i \phi(x_2)_i \phi(x_1)_j \phi(x_2)_j \\
+	&= \sum_{i,j} \phi(x_1)_i^2 \phi(x_2)_j^2 - \phi(x_1)_i \phi(x_2)_i \phi(x_1)_j \phi(x_2)_j \\
+	&= \sum_{i,j} \frac{1}{2}\bigg(\phi(x_1)_i^2 \phi(x_2)_j^2 + \phi(x_1)_j^2 \phi(x_2)_i^2 \bigg) - \phi(x_1)_i \phi(x_2)_i \phi(x_1)_j \phi(x_2)_j \\
+	&= \sum_{i,j} \frac{1}{2}\bigg(\phi(x_1)_i^2 \phi(x_2)_j^2 + \phi(x_1)_j^2 \phi(x_2)_i^2 \bigg) - \frac{1}{2}\bigg(2\phi(x_1)_i \phi(x_2)_j \phi(x_1)_j \phi(x_2)_i \bigg)\\
+	&= \frac{1}{2}\sum_{i,j} (\phi(x_1)_i^2 \phi(x_2)_j^2 + \phi(x_1)_j^2 \phi(x_2)_i^2 \bigg) - (2\phi(x_1)_i \phi(x_2)_j \phi(x_1)_j \phi(x_2)_i \\
+	&= \frac{1}{2} \sum_{i,j} \bigg(\phi(x_1)_i \phi(x_2)_j - \phi(x_1)_j \phi(x_2)_i\bigg)^2\\
+	&\geq 0
+\end{align}
+This directly implies the inequality.
+
+% section cauchy_schwartz_inequality (end)
+
+
+\end{document}

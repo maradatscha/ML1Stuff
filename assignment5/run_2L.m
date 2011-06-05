@@ -6,25 +6,23 @@ mu_2 = [-1 -1 0]';
 Ntr = 50;
 Nte = 100;
 
+% create training data
 x1 = randn(3,Ntr)+repmat(mu_1,1,Ntr);
 x2 = randn(3,Ntr)+repmat(mu_2,1,Ntr);
 
+%plot3(x1(1,:), x1(2,:), x1(3,:), 'r.');
+%hold on;
+%plot3(x2(1,:), x2(2,:), x2(3,:), 'g.');
+%pause
 
-
-
-plot3(x1(1,:), x1(2,:), x1(3,:), 'r.');
-hold on;
-plot3(x2(1,:), x2(2,:), x2(3,:), 'g.');
-pause
-
-
+% create test data
 x1te = randn(3,Nte)+repmat(mu_1,1,Nte);
 x2te = randn(3,Nte)+repmat(mu_2,1,Nte);
 
 
 
 % two class case, normalize
-m = mean([x1,x2],2);
+m = mean([x1,x2, x1te, x2te],2);
 
 x1  = x1 - repmat(m,1,Ntr);
 x2  = x2 - repmat(m,1,Ntr);
@@ -53,12 +51,12 @@ lte(2,Nte+1:end) = 1;
 
 n = 1;
 oldNorm = [1000 ; 1000];
-i = 1
+i = 1;
 
+while(n > 0.00000001 && i < 1000)
 
+    i = i +1;
 
-while(n > 0.0000001 && i < 10000 )
-    i = i +1
     gW1 = zeros(size(W1));
     gW2 = zeros(size(W2));
     
@@ -85,9 +83,11 @@ while(n > 0.0000001 && i < 10000 )
     oldNorm = [norm(gW1) ; norm(gW2)];
     
 end
+disp('Training Iterations: ')
+disp(i)
 
 
-'predictions on training data: '
+disp('predictions on training data... ')
 c = 0;
 for i = 1:size(x,2)
     [y, d] = max(predict(W1, W2, x(:,i) , @sig, @sig));
@@ -96,12 +96,12 @@ for i = 1:size(x,2)
     end
 end
 
-'training error:' 
-(Ntr*2 - c)/(Ntr*2)
+disp('training error:' )
+disp((Ntr*2 - c)/(Ntr*2))
 
 
 
-'predictions on test data: '
+disp('predictions on test data... ')
 c = 0;
 for i = 1:size(xte,2)
     [y, d] = max(predict(W1, W2, xte(:,i) , @sig, @sig));
@@ -110,7 +110,7 @@ for i = 1:size(xte,2)
     end
 end
 
-'test error:' 
-(Nte*2 - c)/(Nte*2)
+disp('test error:' )
+disp((Nte*2 - c)/(Nte*2))
 
 

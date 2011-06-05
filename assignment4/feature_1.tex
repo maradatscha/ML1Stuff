@@ -16,14 +16,28 @@
 		&= x_1^3 {x'}_1^3 + 3x_1^2 {x'}_1^2 x_2 {x'}_2 + 3x_1 {x'}_1 x_2^2 {x'}_2^2 + x_2^3 {x'}_2^3\\
 		&= (x_1 {x'}_1 + x_2 {x'}_2)^3
 \end{align}
-
-
+\begin{align}\nonumber
+    \text{When using k} &\text{: 1 summation} & \text{4 multiplications} \\ \nonumber
+    \text{When using }\phi(x)^\top\phi(x) &\text{: 3 summations} & \text{24 multiplications}
+\end{align}
 
 \begin{eqnarray}
-    k(x,x')&=&\left(<x,x'> + c \right)^3 \\
+    k(x,x')&=&\left( \langle x,x' \rangle + c \right)^3 \\
     &=&\left(x_1x_1'+x_2x_2'+ c \right)^3 \\
     &=&(x_1x_1')^3 + 3(x_1x_1')(x_2x_2')^2 + 3(x_1x_1')c^2 + 3(x_1x_1')^2(x_2x_2')  \\ \nonumber
     && + 3(x_1x_1')^2c  + 6(x_1x_1')(x_2x_2')c + (x_2x_2')^3 + 3 (x_2x_2')c^2 + 3 c (x_2x_2')^2 + c^3\\
-    &=& (x_1x_1')((x_1x_1')((x_1x_1') + 3((x_2x_2') + c)) + (3x_2x_2')((x_2x_2') + 2c) + 3c^2)  \\ \nonumber
-    && (x_2x_2')((x_2x_2')((x_2x_2') + 3 c)+ 3c^2) + c^3
+    &=& \begin{pmatrix}
+		x_1^3 \\ \sqrt{3} x_1 x_2^2 \\ \sqrt{3} x_1 c \\  \sqrt{3} x_1^2 x_2 \\  \sqrt{3} x_1^2 \sqrt{c} \\
+		\sqrt{6} x_1 x_2 \sqrt{c} \\ x_2^3 \\  \sqrt{3} x_2 c \\ \sqrt{3} x_2^2 \sqrt{c} \\ c \sqrt{c}
+	\end{pmatrix}^\top
+ 	\begin{pmatrix}
+		x_1'^3 \\ \sqrt{3} x_1' x_2'^2 \\ \sqrt{3} x_1' c \\  \sqrt{3} x_1'^2 x_2' \\  \sqrt{3} x_1'^2 \sqrt{c} \\
+		\sqrt{6} x_1' x_2' \sqrt{c} \\ x_2'^3 \\  \sqrt{3} x_2' c \\ \sqrt{3} x_2'^2 \sqrt{c} \\ c \sqrt{c}
+	\end{pmatrix}\\
+	&=&\langle \phi(x), \phi(x') \rangle
 \end{eqnarray}
+
+\begin{align}\nonumber
+    \text{When using k} &\text{: 2 summations} & \text{4 multiplications} \\ \nonumber
+    \text{When using }\phi(x)^\top\phi(x) &\text{: 9 summations} & \text{57 multiplications}
+\end{align}
