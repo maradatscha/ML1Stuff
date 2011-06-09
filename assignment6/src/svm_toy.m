@@ -3,7 +3,7 @@ close all;
 mu_1 = [4 4 ]';
 mu_2 = [-4 -4 ]';
 
-Ntr = 100;
+Ntr = 4;
 Nte = 200;
 
 % create training data
@@ -21,49 +21,51 @@ x2te = randn(2,Nte)+repmat(mu_2,1,Nte);
 
 x = [x1, x2]';
 
-y = zeros(Ntr+Ntr,1);    % labels
+y = zeros(Ntr+Ntr,1);
 y(1:Ntr+1) = 1;
 y(Ntr+1:end) = -1;
 
 
-
+%% test primal SVM
 [w, f]  = primal_SVM(x, y)
 
 w_l = [-10:.01:10]'*[w(2), -w(1)];
 
 plot(w_l(:,1), w_l(:,2), 'b');
 
-% linear
 
+%$ test dual SVM
+
+% linear kernel
 G = gram_linear(x);
 
 [a, f]  = dual_SVM(x, y, G);
 
-sum(a>0.0001)
+num_supvectors = sum(a>0.000001)
 
 w = x'*(a.*y)
 f
 
-% RBF
+% RBF kernel
 
 % find lambda
- g = zeros(size(x,1), size(x,1));
- 
-  for i=1:size(x,1)
-     for j=1:size(x,1)
-          g(i,j) = norm(x(i,:)-x(j,:));
-     end
+g = zeros(size(x,1), size(x,1));
+for i=1:size(x,1)
+  for j=1:size(x,1)
+      g(i,j) = norm(x(i,:)-x(j,:));
   end
-  g = g.*g;
-  l = 1/median(g(:));
+end
+g = g.*g;
+l = 1/median(g(:));
   
   
- % try out RBF kernel
- G = gram_RBF(x,l);
- [a, f]  = dual_SVM(x, y, G);
- sum(a>0.000001)
- 
- w = x'*(a.*y);
-  
-  
- f
+G = gram_RBF(x,l);
+[a, f]  = dual_SVM(x, y, G);
+num_supvectors = sum(a>0.000001)
+f
+
+% polynomial kernel
+G = gram_poly(x,1.0, 2);
+[a, f]  = dual_SVM(x, y, G);
+num_supvectors = sum(a>0.000001)
+f
