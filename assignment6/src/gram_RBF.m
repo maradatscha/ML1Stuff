@@ -1,11 +1,17 @@
 function g = gram_RBF( x , l)
 
-i = repmat(x, size(x,2),1);
-j = repmat(x', 1, size(x,2));
 
-g = (i-j);
+g = zeros(size(x,1), size(x,1));
+
+for i=1:size(x,1)
+   for j=1:size(x,1)
+        g(i,j) = norm(x(i,:)-x(j,:));
+   end
+end
+
+
 g = g.*g;
-g = l.*ones(size(g)).*g;
+g = -l.*ones(size(g)).*g;
 
 g = exp(g);
 
