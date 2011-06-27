@@ -51,13 +51,13 @@ C = [0.01, 0.1, 1, 10, 100 ];
 si = 0;
 st = 0;
 
-
+% try RBF kernel
 for i=1:3
   disp(i);
   
   pred_validation = zeros(1000,10);  
   K = rbf(x,l(i));
-  Kv = rbf(xv,l(i),x);
+  Kv = rbf(xv,l(i),x); % 16. juni slide 11
 
   
   for j=1:10
@@ -95,6 +95,7 @@ rbfsi = si;
 si = 0;
 st = 0;
 
+%try polynomial kernel
 for i=1:4
   pred_validation = zeros(1000,10);
   K = poly(x,1,B(i));
@@ -131,13 +132,6 @@ end
 
 disp(sprintf('Poly: geringste Fehler auf den Validierungsdaten mit b=%d, (err=%i)', B(si), ...
 	(1000-st)));
-
-
-
-rbfst = 10;
-st = 0;
-
-si = 1;
 
 
 %train best on validation and training data
