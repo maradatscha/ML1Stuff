@@ -52,12 +52,14 @@ si = 0;
 st = 0;
 
 
-
 for i=1:3
+  disp(i);
   
   pred_validation = zeros(1000,10);  
   K = rbf(x,l(i));
-  Kv = rbf(xv,l(i));
+  Kv = rbf(xv,l(i),x);
+
+  
   for j=1:10
     y = - ones(1000,1);
     y((j-1)*100+1:j*100) = 1;
@@ -67,7 +69,6 @@ for i=1:3
     assert(e==1);
     pred = sign(K*alpha+b);
     assert(all(pred==y));
-    
     
     pred_validation(:,j) = Kv*alpha+b;
     
@@ -97,7 +98,7 @@ st = 0;
 for i=1:4
   pred_validation = zeros(1000,10);
   K = poly(x,1,B(i));
-  Kv = poly(xv,1,B(i)); 
+  Kv = poly(xv,1,B(i),x); 
   for j=1:10
     y = - ones(1000,1);
     y((j-1)*100+1:j*100) = 1;
@@ -132,14 +133,27 @@ disp(sprintf('Poly: geringste Fehler auf den Validierungsdaten mit b=%d, (err=%i
 	(1000-st)));
 
 
+
+rbfst = 10;
+st = 0;
+
+si = 1;
+
+
 %train best on validation and training data
+disp('running on test data')
 if (rbfst< st)
-  K = rbf([x xv] ,l(rbfsi));
-  Kv = rbf(xt ,l(rbfsi));
+  K = rbf([x;xv] ,l(rbfsi));
+  Kv = rbf(xt,l(rbfsi), [x;xv]);
+  disp('using rbf')
 else 
-  K = poly([x xv],1,B(si));
-  Kv = poly(xt,1,B(si));
+  K = poly([x;xv],1,B(si));
+  Kv = poly(xt,1,B(si),[x;xv]);
+  size(Kv)
+  disp('using poly')
 end
+
+
 
 pred_validation = zeros(9000,10);
 
@@ -165,6 +179,6 @@ for j=1:10
   t((j-1)*900+1:j*900) = j;
 end
 
-sum(abs(I==t))
 
+disp(sprintf('Final error is %i', (9000-sum(abs(I==t)))))
   
