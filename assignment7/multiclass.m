@@ -136,7 +136,7 @@ disp(sprintf('Poly: geringste Fehler auf den Validierungsdaten mit b=%d, (err=%i
 
 %train best on validation and training data
 disp('running on test data')
-if (rbfst< st)
+if (rbfst> st)
   K = rbf([x;xv] ,l(rbfsi));
   Kv = rbf(xt,l(rbfsi), [x;xv]);
   disp('using rbf')
