@@ -3,8 +3,8 @@
 \section*{The linear kernel} % (fold)
 \label{sec:the_linear_kernel}
 \begin{itemize}
-	\item If we search for a linear separation $y(x)$ we get the same Dual as by using the linear kernel. This results in an equivalent optimization problem.
-	\item 
+	\item For the linar kernel the discriminant function $y(x) = \sum_{i=1}^{N_S} \alpha_i y_i \phi(x_i)^{\top}\phi{x} + b$ reduces to $y(x) = \mathbf{w}^{\top}x + b$ and is therefore equivalent.
+	\item In general the dual form optimizes over all $\alpha$ which depends on the number of datapoints, whereas the primal form optimizes over $\mathbf{w}$ which only depends on the dimensions of the data. For an increasing number of training points the dual is therefore harder to optimize.
 \end{itemize}
 
 % section the_linear_kernel (end)
