@@ -1,0 +1,23 @@
+%!TEX root=main.tex
+
+\section*{Structured Output Prediction Tasks}
+
+\subsection*{Depth from Focus}
+\begin{itemize}
+    \item input space $X = \{images \}$
+    \item output space $Y = \{depth value for each pixel\} = R^{M\cdot N}$
+    \item prediction function $f : X \rightarrow Y$
+\end{itemize}
+
+With a kernel that estimates the amount of blur in a region of an image.
+
+
+\subsection*{Denoising} 
+
+\begin{itemize}
+    \item input space $X = \{images \}$
+    \item output space $Y = \{images \}$
+    \item prediction function $f : X \rightarrow Y$
+\end{itemize}
+
+With a $\phi$ that relates input image and output image and an \phi that relates the pixel of the output image to each other.
