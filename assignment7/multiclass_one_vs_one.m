@@ -152,8 +152,6 @@ disp(sprintf('Poly: geringste Fehler auf den Validierungsdaten mit b=%d, (err=%i
 disp('running on test data')
 
 
-
-
 pred_validation = zeros(9000,10,10);
 for k=1:10
     for j=k+1:10
@@ -187,9 +185,9 @@ for k=1:10
 end
 
 [pred I] = max(sum(pred_validation, 3), [],2);
-  t = ones(1000,1);
+  t = ones(9000,1);
   for j=1:10
-    t((j-1)*100+1:j*100) = j;
+    t((j-1)*900+1:j*900) = j;
   end
   sum(abs(I==t))
 
