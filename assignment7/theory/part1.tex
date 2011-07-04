@@ -1,4 +1,80 @@
 %!TEX root=main.tex
 
 \section*{Structured Output Prediction} 
+We want to derive the dual programm of
+\begin{align}
+	&\min_w \frac{1}{2} \sum_{c=1}^C ||w_c||^2\\
+	&sb.t. \langle w, \phi(x_i,y_i)\rangle - \langle w, \phi(x_i,y)\rangle \geq 1 , \forall i=1,...,N, y=1,...,C,y \neq y_i \notag
+\end{align}
+We first write down the Lagrangian
+\begin{align}
+	\mathcal{L}(w,\alpha) &=
+	\frac{1}{2} \sum_{c=1}^C ||w_c||^2 - 
+	\sum_{i=1}^N \sum_{\begin{subarray}{l} y=1 \\ y\neq y_i \end{subarray}}^C
+	\alpha_{i,y}(\langle w, \phi(x_i,y_i)\rangle - \langle w, \phi(x_i,y)\rangle - 1 ) \\
+	&= \frac{1}{2} \sum_{c=1}^C ||w_c||^2 - \sum_{i=1}^N \sum_{\begin{subarray}{l} y=1 \\ y\neq y_i \end{subarray}}^C \alpha_{i,y}(\langle w_{y_i}, \phi(x_i)\rangle - \langle w_y, \phi(x_i)\rangle - 1 ) \\
+\end{align}
+And take the derivatives wrt. $w_{y_i}$ and $w_y$
+\begin{align}
+	\frac{\partial \mathcal{L}}{\partial w_{y_i}} &= w_{y_i} - 
+	\sum_{i=1}^N \sum_{\begin{subarray}{l} y=1 \\ y\neq y_i \end{subarray}}^C
+	\alpha_{i,y} \phi(x_i) \stackrel{!}{=} 0 \\
+	w_{y_i} &= \sum_{i=1}^N \sum_{\begin{subarray}{l} y=1 \\ y\neq y_i \end{subarray}}^C
+	\alpha_{i,y} \phi(x_i) \\
+	\frac{\partial \mathcal{L}}{\partial w_{y}} &= w_{y} + 
+	\sum_{i=1}^N 
+	\alpha_{i,y} \phi(x_i) \stackrel{!}{=} 0 \\
+	w_{y} &= - \sum_{i=1}^N \alpha_{i,y} \phi(x_i)
+\end{align}
+We can now substitiute $w$ in the Lagrangian
+\begin{align}
+	\mathcal{L}(w,\alpha) &= 
+	\frac{1}{2} \sum_{c=1}^C ||w_c||^2 
+	 - \sum_{i=1}^N \sum_{\begin{subarray}{l} y=1 \\ y\neq y_i \end{subarray}}^C 
+	   \alpha_{i,y} \langle w_{y_i}, \phi(x_i)\rangle 
+	 + \sum_{i=1}^N \sum_{\begin{subarray}{l} y=1 \\ y\neq y_i \end{subarray}}^C 
+	   \alpha_{i,y} \langle w_y, \phi(x_i)\rangle 
+	 + \sum_{i=1}^N \sum_{\begin{subarray}{l} y=1 \\ y\neq y_i \end{subarray}}^C 
+	 	\alpha_{i,y} \\
+	&=  \frac{1}{2} \sum_{c=1}^C ||w_c||^2 
+	 - \sum_{i=1}^N \sum_{\begin{subarray}{l} y=1 \\ y\neq y_i \end{subarray}}^C 
+		\sum_{j=1}^N \sum_{\begin{subarray}{l} z=1 \\ z\neq z_j \end{subarray}}^C 
+	   \alpha_{i,y} \alpha_{j,z} \phi(x_i) \phi(x_j) 
+	 - \sum_{i=1}^N \sum_{\begin{subarray}{l} y=1 \\ y\neq y_i \end{subarray}}^C 
+	\sum_{j=1}^N 
+	   \alpha_{i,y} \alpha_{j,y} \phi(x_i) \phi(x_j) 
+	 + \sum_{i=1}^N \sum_{\begin{subarray}{l} y=1 \\ y\neq y_i \end{subarray}}^C 
+	 	\alpha_{i,y}
+\end{align}
+\begin{align}
+	\frac{1}{2} \sum_{y=1}^C ||w_y||^2 &= 
+	\frac{1}{2}(||w_{y_i}||^2 + \sum_{\begin{subarray}{l} y=1 \\ y\neq y_i \end{subarray}}^C || w_y ||^2)\\
+	&= \frac{1}{2}\left( \sum_{i=1}^N \sum_{\begin{subarray}{l} y=1 \\ y\neq y_i \end{subarray}}^C 
+		\sum_{j=1}^N \sum_{\begin{subarray}{l} z=1 \\ z\neq z_j \end{subarray}}^C 
+	   \alpha_{i,y} \alpha_{j,z} \phi(x_i) \phi(x_j) 
+	 +\sum_{i=1}^N \sum_{\begin{subarray}{l} y=1 \\ y\neq y_i \end{subarray}}^C 
+	\sum_{j=1}^N 
+	   \alpha_{i,y} \alpha_{j,y} \phi(x_i) \phi(x_j) 
+	  \right) 
+\end{align}
+\begin{align}
+	\mathcal{L}(\alpha) &= \sum_{i=1}^N \sum_{\begin{subarray}{l} y=1 \\ y\neq y_i \end{subarray}}^C \alpha_{i,y} -\frac{1}{2}\left( \sum_{i=1}^N \sum_{\begin{subarray}{l} y=1 \\ y\neq y_i \end{subarray}}^C 
+		\sum_{j=1}^N \sum_{\begin{subarray}{l} z=1 \\ z\neq z_j \end{subarray}}^C 
+	   \alpha_{i,y} \alpha_{j,z} \phi(x_i) \phi(x_j) 
+	 +\sum_{i=1}^N \sum_{\begin{subarray}{l} y=1 \\ y\neq y_i \end{subarray}}^C 
+	\sum_{j=1}^N 
+	   \alpha_{i,y} \alpha_{j,y} \phi(x_i) \phi(x_j) 
+	  \right)
+\end{align}
+In the kernelized version we get
+\begin{align}
+	\mathcal{L}(\alpha) &= \sum_{i=1}^N \sum_{\begin{subarray}{l} y=1 \\ y\neq y_i \end{subarray}}^C \alpha_{i,y} -\frac{1}{2}\left( \sum_{i=1}^N \sum_{\begin{subarray}{l} y=1 \\ y\neq y_i \end{subarray}}^C 
+		\sum_{j=1}^N \sum_{\begin{subarray}{l} z=1 \\ z\neq z_j \end{subarray}}^C 
+	   \alpha_{i,y} \alpha_{j,z} k(x_i,x_j)
+	 +\sum_{i=1}^N \sum_{\begin{subarray}{l} y=1 \\ y\neq y_i \end{subarray}}^C 
+	\sum_{j=1}^N 
+	   \alpha_{i,y} \alpha_{j,y} k(x_i,x_j) 
+	  \right)
+\end{align}
+For the soft-margin case we have
 
