@@ -84,7 +84,7 @@ For the soft-margin case we have similar results
 	\mathcal{L}(w,\alpha, \beta) &=
 	\frac{1}{2} \sum_{c=1}^C ||w_c||^2 + \mathcal{C}\sum_{i=1}^N \xi_i - 
 	\sum_{i=1}^N \sum_{\begin{subarray}{l} y=1 \\ y\neq y_i \end{subarray}}^C
-	\alpha_{i,y}(\langle w, \phi(x_i,y_i)\rangle - \langle w, \phi(x_i,y)\rangle - 1 )
+	\alpha_{i,y}(\langle w, \phi(x_i,y_i)\rangle - \langle w, \phi(x_i,y)\rangle - 1 +\xi_i )
 	- \sum_{i}^N  \beta_i \xi_i \\
 	sb.t. ~ &\alpha_{i,y} \geq 0 ~, ~\beta_i \geq 0 ~ \forall i = 1,...,N ~ \forall y = 1,...,C ~ ,~ y\neq y_i\notag
 \end{align}
