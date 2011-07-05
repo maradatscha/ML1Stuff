@@ -24,7 +24,7 @@ for i=1:10
 end
 size(y)
 
-%[w,b,fval,e,A] = truemulticlassSVM(train, y);
+%[w,fval,e] = truemulticlassSVM(train, y);
 x = train;
 
 [dim N] = size(x);
