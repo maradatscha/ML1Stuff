@@ -6,18 +6,19 @@
 \begin{itemize}
     \item input space $X = \{images \}$
     \item output space $Y = \{depth value for each pixel\} = R^{M\cdot N}$
-    \item prediction function $f : X \rightarrow Y$
+    \item prediction function $f : X \rightarrow Y, f(x):= \underset{y \in Y}{\text{argmin}} E(x,y)$
+    \item energy $E(x,y) = \sum_i w^T_i \phi_{\text{blur}}(x_i, y_i) + \sum_{i,j} w^T_{ij} \phi_{\text{natural depth image}}(y_i, y_j)$
 \end{itemize}
 
-With a kernel that estimates the amount of blur in a region of an image.
-
+This blur function should give a higher depth to blurred pixels. The natural image function should favor depth images that are mostly smooth with some sharp edges.
 
 \subsection*{Denoising} 
 
 \begin{itemize}
     \item input space $X = \{images \}$
     \item output space $Y = \{images \}$
-    \item prediction function $f : X \rightarrow Y$
+    \item prediction function $f : X \rightarrow Y, f(x):= \underset{y \in Y}{\text{argmin}} E(x,y)$
+    \item energy $E(x,y) = \sum_i w^T_i \phi_{\text{noise}}(x_i, y_i) + \sum_{i,j} w^T_{ij} \phi_{\text{natural image}}(y_i, y_j)$
 \end{itemize}
 
-With a $\phi$ that relates input image and output image and an $\phi$ that relates the pixel of the output image to each other.
+The noise function should try to keep each pixel in the output image close to the input image. The natural image function should act as a prior on the output image.
